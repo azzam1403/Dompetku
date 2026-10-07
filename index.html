@@ -3,6 +3,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="description" content="Dompetku: catat uang tunai, e-wallet, dan mobile banking, pemasukan, pengeluaran, anggaran, dan struk.">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 100 100%27%3E%3Ctext y=%27.9em%27 font-size=%2790%27%3E%F0%9F%91%9B%3C/text%3E%3C/svg%3E">
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#0a8f8a">
+<link rel="apple-touch-icon" href="icon-192.png">
 <title>Dompetku – Catatan Keuangan</title>
 <style>
 :root{box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);
@@ -173,4 +176,5 @@ function pick(el){const f=el.files[0];if(!f)return;const r=new FileReader();r.on
 function strk(id){const t=S.tx.find(x=>x.id==id);if(!t)return;const ty={in:'Pemasukan',out:'Pengeluaran',tf:'Transfer',adj:'Penyesuaian saldo'}[t.type],up=t.type=='in'||(t.type=='adj'&&t.amt>0);
 const r=(a,b)=>`<div class="row" style="padding:5px 0"><span style="color:var(--mu)">${a}</span><b style="text-align:right">${b}</b></div>`;
 sheet(`<div class="rc"><div style="text-align:center"><div style="font-size:30px">${ico(t)}</div><div style="color:var(--mu);font-size:12px;margin-top:4px">${ty}</div><div class="${up?'in':t.type=='out'||t.type=='adj'?'out':''}" style="font-size:26px;font-weight:800;margin:4px 0">${rp(Math.abs(t.amt))}</div></div><div class="dash"></div>${r('Tanggal',new Date(t.date+'T00:00').toLocaleDateString('id-ID',{day:'numeric',month:'long',year:'numeric'}))}${t.type=='tf'?r('Dari',an(t.acc))+r('Ke',an(t.to)):r('Dompet',an(t.acc))+r('Kategori',t.cat)}${t.note?r('Catatan',t.note):''}${r('No. transaksi','DK'+String(t.id).slice(-8))}${t.img?`<div class="dash"></div><img class="pho" src="${t.img}" alt="Foto struk">`:''}</div>${t.type=='adj'?'':`<button class="go" onclick="editTx(${t.id})">Ubah transaksi</button>`}`)}
+if('serviceWorker' in navigator)window.addEventListener('load',()=>navigator.serviceWorker.register('sw.js').catch(()=>{}));
 </script></body></html>
